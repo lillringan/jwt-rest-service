@@ -16,7 +16,7 @@ public class Admin extends AbstractEntity {
 	@Column(unique=true)
 	private String salt;
 	
-	private String hashedPassword;
+	private byte[] hashedPassword;
 	
 	private LocalDateTime timestamp;
 	
@@ -26,7 +26,7 @@ public class Admin extends AbstractEntity {
 	protected Admin(){
 	}
 	
-	public Admin(String password, String username){
+	public Admin(byte[] password, String username){
 		this.hashedPassword = password;
 		this.username = username;
 	}
@@ -39,7 +39,7 @@ public class Admin extends AbstractEntity {
 		return salt;
 	}
 	
-	public String getHashedPassword() {
+	public byte[] getHashedPassword() {
 		return hashedPassword;
 	}
 	
