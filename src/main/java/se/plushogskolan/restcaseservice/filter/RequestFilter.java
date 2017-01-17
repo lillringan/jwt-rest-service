@@ -10,15 +10,17 @@ import se.plushogskolan.restcaseservice.exception.UnathorizedException;
 
 @Provider
 public final class RequestFilter implements ContainerRequestFilter {
-	
+
 	public static final String AUTH_TOKEN = "auth";
 
 	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {
-		
+
 		String authHeader = requestContext.getHeaderString("Authorization");
 		
-		if(authHeader == null || !authHeader.equalsIgnoreCase(AUTH_TOKEN)){			
+		System.out.println(requestContext.getUriInfo().getRequestUri());
+		
+		if (authHeader == null || !authHeader.equalsIgnoreCase(AUTH_TOKEN)) {
 			throw new UnathorizedException("Unathorized");
 		}
 		
