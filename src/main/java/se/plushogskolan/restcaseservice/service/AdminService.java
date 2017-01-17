@@ -1,5 +1,7 @@
 package se.plushogskolan.restcaseservice.service;
 
+import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -47,7 +49,13 @@ public class AdminService {
 		} catch(DataAccessException e) {
 			throw new WebInternalErrorException("Internal error");
 		}
-		return true;
+		if(admin != null)
+			throw new UnathorizedException("Token not found");
+		else if(admin.getTimestamp().isAfter(LocalDateTime.now())) {
+			throw new UnathorizedException("Token has run out");
+		}
+		else
+			return true;
 	}
 	
 	
