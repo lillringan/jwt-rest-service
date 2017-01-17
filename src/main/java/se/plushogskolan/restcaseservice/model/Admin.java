@@ -1,6 +1,6 @@
 package se.plushogskolan.restcaseservice.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 
@@ -15,11 +15,30 @@ public class Admin extends AbstractEntity {
 	
 	private String hashedPassword;
 	
-	private LocalDate timestamp;
+	private LocalDateTime timestamp;
 	
 	private String token;
 	
 	protected Admin(){
+	}
+	
+	public String getUsername() {
+		return username;
+	}
+	
+	public String getSalt() {
+		return salt;
+	}
+	
+	public String getHashedPassword() {
+		return hashedPassword;
+	}
+	
+	public LocalDateTime getTimestamp() {
 		
+		return LocalDateTime.from(timestamp);
+	}
+	public String getToken() {
+		return token;
 	}
 }
