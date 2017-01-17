@@ -26,9 +26,10 @@ public class Admin extends AbstractEntity {
 	protected Admin(){
 	}
 	
-	public Admin(byte[] password, String username){
+	public Admin(byte[] password, String username, String salt){
 		this.hashedPassword = password;
 		this.username = username;
+		this.salt = salt;
 	}
 	
 	public String getUsername() {
