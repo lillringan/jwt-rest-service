@@ -22,6 +22,11 @@ public class Admin extends AbstractEntity {
 	protected Admin(){
 	}
 	
+	public Admin(String password, String username){
+		this.hashedPassword = password;
+		this.username = username;
+	}
+	
 	public String getUsername() {
 		return username;
 	}
@@ -38,6 +43,7 @@ public class Admin extends AbstractEntity {
 		
 		return LocalDateTime.from(timestamp);
 	}
+	
 	public String getToken() {
 		return token;
 	}
