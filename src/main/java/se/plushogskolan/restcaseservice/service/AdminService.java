@@ -24,7 +24,7 @@ import se.plushogskolan.restcaseservice.repository.AdminRepository;
 @Service
 public class AdminService {
 	
-	private final long EXPIRATION_TIME = 600;
+	private final long EXPIRATION_TIME = 10;
 	private final int ITERATIONS = 100;
 	private AdminRepository adminRepository;
 	
@@ -74,7 +74,7 @@ public class AdminService {
 		}
 		if(admin == null)
 			throw new UnauthorizedException("Token not found");
-		else if(admin.getTimestamp().isAfter(LocalDateTime.now())) {
+		else if(admin.getTimestamp().isBefore(LocalDateTime.now())) {
 			throw new UnauthorizedException("Token has run out");
 		}
 		else
