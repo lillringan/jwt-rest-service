@@ -20,11 +20,9 @@ public final class RequestFilter implements ContainerRequestFilter {
 	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {
 
-		if ("/login".equals(requestContext.getUriInfo().getRequestUri().getRawPath())) {
-		} else if (adminService.authenticateToken(requestContext.getHeaderString("Authorization"))) {
-		} else {
+		if ("/login".equals(requestContext.getUriInfo().getRequestUri().getRawPath())
+				|| adminService.authenticateToken(requestContext.getHeaderString("Authorization"))) {}
+		else
 			throw new UnauthorizedException("Unauthorized");
-		}
 	}
-
 }
