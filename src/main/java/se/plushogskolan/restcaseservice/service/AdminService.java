@@ -76,7 +76,7 @@ public class AdminService {
 	}
 	
 	private byte[] generateSalt(String password) {
-		byte[] bytes = new byte[256-password.length()];
+		byte[] bytes = new byte[32-password.length()];
 		SecureRandom random = new SecureRandom();
 		random.nextBytes(bytes);
 		return Base64.getEncoder().encode(bytes);
@@ -105,7 +105,7 @@ public class AdminService {
 	}
 	
 	private String generateToken() {
-		byte[] bytes = new byte[256];
+		byte[] bytes = new byte[32];
 		SecureRandom random = new SecureRandom();
 		random.nextBytes(bytes);
 		return new String(Base64.getEncoder().encode(bytes));
