@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import se.plushogskolan.restcaseservice.exception.NotFoundException;
 import se.plushogskolan.restcaseservice.exception.UnauthorizedException;
 import se.plushogskolan.restcaseservice.exception.WebInternalErrorException;
 import se.plushogskolan.restcaseservice.model.AccessBean;
@@ -42,16 +43,25 @@ public class AdminService {
 	}
 	
 	public AccessBean login(String username, String password) {
-		Admin admin = adminRepository.findByUsername(username);
-		if(authenticateLogin(admin, password)) {
-			String token = generateToken();
-			admin.setToken(token);
-			admin.setTimestamp(generateTimestamp());
-			admin = adminRepository.save(admin);
-			return new AccessBean(admin.getToken(), admin.getTimestamp().toString());
+		Admin admin;
+		try {
+			admin = adminRepository.findByUsername(username);
+		} catch(DataAccessException e) {
+			throw new WebInternalErrorException("Internal error");
+		}
+		if(admin != null) {
+			if(authenticateLogin(admin, password)) {
+				String token = generateToken();
+				admin.setToken(token);
+				admin.setTimestamp(generateTimestamp());
+				admin = adminRepository.save(admin);
+				return new AccessBean(admin.getToken(), admin.getTimestamp().toString());
+			}
+			else
+				throw new UnauthorizedException("Invalid login");
 		}
 		else
-			throw new UnauthorizedException("Invalid login");
+			throw new NotFoundException("User does not exist");
 	}
 	
 	public boolean authenticateToken(String token) {
