@@ -31,9 +31,7 @@ public final class LoginResource {
 		if(credentials.getPassword() == null || credentials.getUsername() == null)
 			throw new UnauthorizedException("Missing username or password");
 		
-		String token = adminService.login(credentials.getUsername(), credentials.getPassword());
-		
-		AccessBean accessBean = new AccessBean(token, "600");
+		AccessBean accessBean = adminService.login(credentials.getUsername(), credentials.getPassword());
 		
 		return Response.ok(accessBean).build();
 	}

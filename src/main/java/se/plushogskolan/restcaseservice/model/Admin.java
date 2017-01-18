@@ -13,7 +13,7 @@ public class Admin extends AbstractEntity {
 	@Column(unique=true)
 	private String username;
 	
-	@Column(unique=true)
+	@Column(unique=true, columnDefinition = "LONGBLOB")
 	private byte[] salt;
 	
 	private byte[] hashedPassword;
