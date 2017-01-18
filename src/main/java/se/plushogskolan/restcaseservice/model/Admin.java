@@ -13,7 +13,6 @@ public class Admin extends AbstractEntity {
 	@Column(unique=true)
 	private String username;
 	
-	//hehehe don't hate me if I butchered your code
 	@Column(unique=true)
 	private byte[] salt;
 	
@@ -26,13 +25,6 @@ public class Admin extends AbstractEntity {
 	
 	protected Admin(){
 	}
-	
-	//TODO should be replaced with byte[] salt
-//	public Admin(byte[] password, String username, String salt){
-//		this.hashedPassword = password;
-//		this.username = username;
-//		this.salt = salt;
-//	}
 	
 	public Admin(byte[] password, String username, byte[] salt){
 		this.hashedPassword = password;

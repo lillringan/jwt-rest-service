@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
-import se.plushogskolan.restcaseservice.exception.NotFoundException;
 import se.plushogskolan.restcaseservice.exception.UnauthorizedException;
 import se.plushogskolan.restcaseservice.exception.WebInternalErrorException;
 import se.plushogskolan.restcaseservice.model.Admin;
@@ -42,13 +41,7 @@ public class AdminService {
 	}
 	
 	public String login(String username, String password) {
-		Admin admin;
-		try {
-			admin = adminRepository.findByUsername(username);
-		} catch(DataAccessException e) {
-			throw new NotFoundException("Username not found");
-		}
-		
+		Admin admin = adminRepository.findByUsername(username);
 		if(authenticateLogin(admin, password)) {
 			String token = generateToken();
 			admin.setToken(token);
@@ -84,7 +77,7 @@ public class AdminService {
 	}
 	
 	private byte[] generateSalt(String password) {
-		byte[] bytes = new byte[256-password.length()];
+		byte[] bytes = new byte[32-password.length()];
 		SecureRandom random = new SecureRandom();
 		random.nextBytes(bytes);
 		return Base64.getEncoder().encode(bytes);
