@@ -21,6 +21,7 @@ import se.plushogskolan.restcaseservice.repository.AdminRepository;
 @Service
 public class AdminService {
 	
+	private final long EXPIRATION_TIME = 600;
 	private final int ITERATIONS = 100;
 	private AdminRepository adminRepository;
 	
@@ -43,6 +44,7 @@ public class AdminService {
 		if(authenticateLogin(admin, password)) {
 			String token = generateToken();
 			admin.setToken(token);
+			admin.setTimestamp(generateTimestamp());
 			adminRepository.save(admin);
 			return token;
 		}
@@ -96,7 +98,7 @@ public class AdminService {
 		return hashToReturn;
 	}
 	
-	//returns null?
+	//TODO returns null?
 	private boolean authenticateLogin(Admin admin, String password) {
 		return generateHash(password, admin.getSalt()).equals(admin.getHashedPassword());
 	}
@@ -108,5 +110,7 @@ public class AdminService {
 		return new String(Base64.getEncoder().encode(bytes));
 	}
 	
-	//No timestamp function must also be saved!!
+	private LocalDateTime generateTimestamp() {
+		return LocalDateTime.now().plusSeconds(EXPIRATION_TIME);
+	}
 }
