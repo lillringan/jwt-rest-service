@@ -24,7 +24,7 @@ import se.plushogskolan.restcaseservice.repository.AdminRepository;
 @Service
 public class AdminService {
 	
-	private final long EXPIRATION_TIME = 25;
+	private final long EXPIRATION_TIME = 300;
 	private final int ITERATIONS = 100;
 	private AdminRepository adminRepository;
 	
@@ -102,16 +102,13 @@ public class AdminService {
 		try {
 			factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512");
 			hashToReturn =  factory.generateSecret(spec).getEncoded();
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		} catch(InvalidKeySpecException e) {
-			e.printStackTrace();
+		} catch (NoSuchAlgorithmException|InvalidKeySpecException e) {
+			throw new WebInternalErrorException("Internal error");
 		}
 		
 		return hashToReturn;
 	}
 	
-	//TODO returns null?
 	private boolean authenticateLogin(Admin admin, String password) {
 		return Arrays.equals(generateHash(password, admin.getSalt()), admin.getHashedPassword());
 	}
