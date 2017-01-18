@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import se.plushogskolan.restcaseservice.exception.NotFoundException;
 import se.plushogskolan.restcaseservice.exception.UnauthorizedException;
 import se.plushogskolan.restcaseservice.exception.WebInternalErrorException;
 import se.plushogskolan.restcaseservice.model.Admin;
@@ -40,7 +41,13 @@ public class AdminService {
 	}
 	
 	public String login(String username, String password) {
-		Admin admin = adminRepository.findByUsername(username);
+		Admin admin;
+		try {
+			admin = adminRepository.findByUsername(username);
+		} catch(DataAccessException e) {
+			throw new NotFoundException("Username not found");
+		}
+		
 		if(authenticateLogin(admin, password)) {
 			String token = generateToken();
 			admin.setToken(token);
