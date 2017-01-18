@@ -10,7 +10,7 @@ import javax.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import se.plushogskolan.restcaseservice.exception.UnathorizedException;
+import se.plushogskolan.restcaseservice.exception.UnauthorizedException;
 import se.plushogskolan.restcaseservice.model.AccessBean;
 import se.plushogskolan.restcaseservice.model.LoginBean;
 import se.plushogskolan.restcaseservice.service.AdminService;
@@ -28,7 +28,7 @@ public final class LoginResource {
 	public Response login(LoginBean credentials){
 		
 		if(credentials.getPassword() == null || credentials.getUsername() == null)
-			throw new UnathorizedException("Missing username or password");
+			throw new UnauthorizedException("Missing username or password");
 		
 		String token = adminService.login(credentials.getUsername(), credentials.getPassword());
 		

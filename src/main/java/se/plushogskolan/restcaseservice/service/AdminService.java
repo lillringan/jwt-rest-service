@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
-import se.plushogskolan.restcaseservice.exception.UnathorizedException;
+import se.plushogskolan.restcaseservice.exception.UnauthorizedException;
 import se.plushogskolan.restcaseservice.exception.WebInternalErrorException;
 import se.plushogskolan.restcaseservice.model.Admin;
 import se.plushogskolan.restcaseservice.repository.AdminRepository;
@@ -49,7 +49,7 @@ public class AdminService {
 			return token;
 		}
 		else
-			throw new UnathorizedException("Invalid login");
+			throw new UnauthorizedException("Invalid login");
 	}
 	
 	public boolean authenticateToken(String token) {
@@ -61,9 +61,9 @@ public class AdminService {
 			throw new WebInternalErrorException("Internal error");
 		}
 		if(admin == null)
-			throw new UnathorizedException("Token not found");
+			throw new UnauthorizedException("Token not found");
 		else if(admin.getTimestamp().isAfter(LocalDateTime.now())) {
-			throw new UnathorizedException("Token has run out");
+			throw new UnauthorizedException("Token has run out");
 		}
 		else
 			return true;

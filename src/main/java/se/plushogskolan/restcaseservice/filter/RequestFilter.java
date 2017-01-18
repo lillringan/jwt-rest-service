@@ -8,7 +8,7 @@ import javax.ws.rs.ext.Provider;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import se.plushogskolan.restcaseservice.exception.UnathorizedException;
+import se.plushogskolan.restcaseservice.exception.UnauthorizedException;
 import se.plushogskolan.restcaseservice.service.AdminService;
 
 @Provider
@@ -27,7 +27,7 @@ public final class RequestFilter implements ContainerRequestFilter {
 		if ("/login".equals(requestContext.getUriInfo().getRequestUri().getRawPath())) {
 		} else if (adminService.authenticateToken(requestContext.getHeaderString("Authorization"))) {
 		} else if (authHeader == null || !authHeader.equalsIgnoreCase(AUTH_TOKEN)) {
-			throw new UnathorizedException("Unathorized");
+			throw new UnauthorizedException("Unathorized");
 		}
 
 	}
