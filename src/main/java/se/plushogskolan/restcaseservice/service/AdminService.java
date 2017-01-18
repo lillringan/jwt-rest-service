@@ -4,6 +4,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Base64;
 
 import javax.crypto.SecretKeyFactory;
@@ -108,7 +109,7 @@ public class AdminService {
 	
 	//TODO returns null?
 	private boolean authenticateLogin(Admin admin, String password) {
-		return generateHash(password, admin.getSalt()).equals(admin.getHashedPassword());
+		return Arrays.equals(generateHash(password, admin.getSalt()), admin.getHashedPassword());
 	}
 	
 	private String generateToken() {
