@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import se.plushogskolan.restcaseservice.exception.UnauthorizedException;
 import se.plushogskolan.restcaseservice.exception.WebInternalErrorException;
+import se.plushogskolan.restcaseservice.model.AccessBean;
 import se.plushogskolan.restcaseservice.model.Admin;
 import se.plushogskolan.restcaseservice.repository.AdminRepository;
 
@@ -40,14 +41,14 @@ public class AdminService {
 		}
 	}
 	
-	public String login(String username, String password) {
+	public AccessBean login(String username, String password) {
 		Admin admin = adminRepository.findByUsername(username);
 		if(authenticateLogin(admin, password)) {
 			String token = generateToken();
 			admin.setToken(token);
 			admin.setTimestamp(generateTimestamp());
-			adminRepository.save(admin);
-			return token;
+			admin = adminRepository.save(admin);
+			return new AccessBean(admin.getToken(), admin.getTimestamp().toString());
 		}
 		else
 			throw new UnauthorizedException("Invalid login");
