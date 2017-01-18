@@ -53,6 +53,7 @@ public class AdminService {
 	}
 	
 	public boolean authenticateToken(String token) {
+		token = new String(token.substring("Bearer ".length()));
 		Admin admin;
 		try {
 			admin = adminRepository.findByToken(token);
