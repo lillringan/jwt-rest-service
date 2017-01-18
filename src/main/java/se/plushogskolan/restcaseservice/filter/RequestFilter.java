@@ -14,22 +14,17 @@ import se.plushogskolan.restcaseservice.service.AdminService;
 @Provider
 public final class RequestFilter implements ContainerRequestFilter {
 
-	public static final String AUTH_TOKEN = "auth";
-
 	@Autowired
-	AdminService adminService;
+	private AdminService adminService;
 
 	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {
 
-		String authHeader = requestContext.getHeaderString("Authorization");
-
 		if ("/login".equals(requestContext.getUriInfo().getRequestUri().getRawPath())) {
 		} else if (adminService.authenticateToken(requestContext.getHeaderString("Authorization"))) {
-		} else if (authHeader == null || !authHeader.equalsIgnoreCase(AUTH_TOKEN)) {
-			throw new UnauthorizedException("Unathorized");
+		} else {
+			throw new UnauthorizedException("Unauthorized");
 		}
-
 	}
 
 }
