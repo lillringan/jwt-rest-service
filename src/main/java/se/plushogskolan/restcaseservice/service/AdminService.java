@@ -24,7 +24,7 @@ import se.plushogskolan.restcaseservice.repository.AdminRepository;
 @Service
 public class AdminService {
 	
-	private final long EXPIRATION_TIME = 10;
+	private final long EXPIRATION_TIME = 25;
 	private final int ITERATIONS = 100;
 	private AdminRepository adminRepository;
 	
