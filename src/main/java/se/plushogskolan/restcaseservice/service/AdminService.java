@@ -96,6 +96,7 @@ public class AdminService {
 		return hashToReturn;
 	}
 	
+	//returns null?
 	private boolean authenticateLogin(Admin admin, String password) {
 		return generateHash(password, admin.getSalt()).equals(admin.getHashedPassword());
 	}
@@ -106,4 +107,6 @@ public class AdminService {
 		random.nextBytes(bytes);
 		return new String(Base64.getEncoder().encode(bytes));
 	}
+	
+	//No timestamp function must also be saved!!
 }

@@ -9,6 +9,7 @@ import se.plushogskolan.restcaseservice.exception.NotFoundExceptionMapper;
 import se.plushogskolan.restcaseservice.exception.UnathorizedExceptionMapper;
 import se.plushogskolan.restcaseservice.filter.RequestFilter;
 import se.plushogskolan.restcaseservice.resource.IssueResource;
+import se.plushogskolan.restcaseservice.resource.LoginResource;
 import se.plushogskolan.restcaseservice.resource.TeamResource;
 import se.plushogskolan.restcaseservice.resource.UserResource;
 import se.plushogskolan.restcaseservice.resource.WorkItemResource;
@@ -21,6 +22,7 @@ public class JerseyConfig extends ResourceConfig {
 		register(WorkItemResource.class);
 		register(TeamResource.class);
 		register(IssueResource.class);
+		register(LoginResource.class);
 		register(ConflictExceptionMapper.class);
 		register(NotFoundExceptionMapper.class);
 		register(BadRequestExceptionMapper.class);
