@@ -65,20 +65,24 @@ public class AdminService {
 	}
 	
 	public boolean authenticateToken(String token) {
-		token = new String(token.substring("Bearer ".length()));
-		Admin admin;
-		try {
-			admin = adminRepository.findByToken(token);
-		} catch(DataAccessException e) {
-			throw new WebInternalErrorException("Internal error");
-		}
-		if(admin == null)
-			throw new UnauthorizedException("Token not found");
-		else if(admin.getTimestamp().isBefore(LocalDateTime.now())) {
-			throw new UnauthorizedException("Token has run out");
+		if(token != null) {
+			token = new String(token.substring("Bearer ".length()));
+			Admin admin;
+			try {
+				admin = adminRepository.findByToken(token);
+			} catch(DataAccessException e) {
+				throw new WebInternalErrorException("Internal error");
+			}
+			if(admin == null)
+				throw new UnauthorizedException("Token not found");
+			else if(admin.getTimestamp().isBefore(LocalDateTime.now())) {
+				throw new UnauthorizedException("Token has run out");
+			}
+			else
+				return true;
 		}
 		else
-			return true;
+			throw new UnauthorizedException("No authorization header found");
 	}
 	
 	private Admin createAdmin(String username, String password) {
