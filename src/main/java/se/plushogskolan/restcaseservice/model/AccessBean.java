@@ -6,17 +6,16 @@ public final class AccessBean {
 	
 	private String expiration_time;
 	
-	public AccessBean(String accessToken, String expirationTime){
-		this.access_token = accessToken;
-		this.expiration_time = expirationTime;
+	public AccessBean(String access_token, String expiration_time){
+		this.access_token = access_token;
+		this.expiration_time = expiration_time;
 	}
 	
-	public String getExpirationTime() {
+	public String getExpiration_time() {
 		return expiration_time;
 	}
 	
-	public String getAccessToken() {
+	public String getAccess_token() {
 		return access_token;
 	}
-	
 }
