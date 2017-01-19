@@ -2,21 +2,21 @@ package se.plushogskolan.restcaseservice.model;
 
 public final class AccessBean {
 
-	private String accessToken;
+	private String access_token;
 	
-	private String expirationTime;
+	private String expiration_time;
 	
 	public AccessBean(String accessToken, String expirationTime){
-		this.accessToken = accessToken;
-		this.expirationTime = expirationTime;
+		this.access_token = accessToken;
+		this.expiration_time = expirationTime;
 	}
 	
 	public String getExpirationTime() {
-		return expirationTime;
+		return expiration_time;
 	}
 	
 	public String getAccessToken() {
-		return accessToken;
+		return access_token;
 	}
 	
 }
