@@ -84,6 +84,18 @@ public class AdminService {
 		else
 			throw new UnauthorizedException("No authorization header found");
 	}
+
+	public void updateTokenTimestamp(String token) {
+		if(token != null) {
+			token = new String(token.substring("Bearer".length()));
+			try {
+				Admin admin = adminRepository.findByToken(token);
+				adminRepository.updateTimestampById(admin.getId(), generateTimestamp());
+			} catch(DataAccessException e) {
+				throw new WebInternalErrorException("Internal error");
+			}
+		}
+	}
 	
 	private Admin createAdmin(String username, String password) {
 		byte[] salt = generateSalt(password);
@@ -127,4 +139,5 @@ public class AdminService {
 	private LocalDateTime generateTimestamp() {
 		return LocalDateTime.now().plusSeconds(EXPIRATION_TIME);
 	}
+	
 }
