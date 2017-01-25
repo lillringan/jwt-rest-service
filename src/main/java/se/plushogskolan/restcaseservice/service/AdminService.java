@@ -90,7 +90,8 @@ public class AdminService {
 			token = new String(token.substring("Bearer".length()));
 			try {
 				Admin admin = adminRepository.findByToken(token);
-				adminRepository.updateTimestampById(admin.getId(), generateTimestamp());
+				admin.setTimestamp(generateTimestamp());
+				adminRepository.save(admin);
 			} catch(DataAccessException e) {
 				throw new WebInternalErrorException("Internal error");
 			}
