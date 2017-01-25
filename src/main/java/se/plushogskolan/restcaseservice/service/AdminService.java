@@ -87,7 +87,7 @@ public class AdminService {
 
 	public void updateTokenTimestamp(String token) {
 		if(token != null) {
-			token = new String(token.substring("Bearer".length()));
+			token = new String(token.substring("Bearer ".length()));
 			try {
 				Admin admin = adminRepository.findByToken(token);
 				admin.setTimestamp(generateTimestamp());
