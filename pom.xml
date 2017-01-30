@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>se.plushogskolan.securerestservice</groupId>
-	<artifactId>secure-rest-service</artifactId>
+	<artifactId>jwt-rest-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
@@ -47,6 +47,12 @@
 			<groupId>com.github.JoakimLandstrom</groupId>
 			<artifactId>Casemanagement---Spring</artifactId>
 			<version>1c2519f1cc</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.7.0</version>
 		</dependency>
 
 	</dependencies>

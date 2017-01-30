@@ -2,7 +2,6 @@ package se.plushogskolan.restcaseservice.resource;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -36,8 +35,22 @@ public final class LoginResource {
 		return Response.ok(accessBean).build();
 	}
 	
-	//just to create an admin
-	@PUT
+	@POST
+	@Path("refresh")
+	public Response getNewAccessToken(LoginBean login){
+		
+		String refresh_token = login.getRefresh_token();
+		
+		if(refresh_token == null)
+			throw new UnauthorizedException("Missing refresh token");
+		
+		String accessToken = adminService.generateNewAccessToken(refresh_token);
+		
+		return Response.ok(accessToken).build();
+}
+	
+	@Path("/new")
+	@POST
 	public Response createAdmin(LoginBean credentials){
 		
 		if(credentials.getPassword() == null || credentials.getUsername() == null)
@@ -46,6 +59,6 @@ public final class LoginResource {
 		adminService.save(credentials.getUsername(), credentials.getPassword());
 		
 		return Response.ok().build();
-	}
+}
 
 }

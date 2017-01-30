@@ -19,7 +19,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import se.plushogskolan.casemanagement.model.WorkItem.Status;
-import se.plushogskolan.restcaseservice.model.DTOIssue;
 import se.plushogskolan.restcaseservice.model.DTOTeam;
 import se.plushogskolan.restcaseservice.model.DTOUser;
 import se.plushogskolan.restcaseservice.model.DTOWorkItem;

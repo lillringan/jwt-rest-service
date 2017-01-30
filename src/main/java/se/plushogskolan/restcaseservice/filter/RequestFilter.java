@@ -19,14 +19,15 @@ public final class RequestFilter implements ContainerRequestFilter {
 
 	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {
+
+		String path = requestContext.getUriInfo().getRequestUri().getRawPath();
 		String token = requestContext.getHeaderString("Authorization");
-		String resource = requestContext.getUriInfo().getRequestUri().getRawPath();
-		
-		if ("/login".equals(resource)) {} 
-		else if(adminService.authenticateToken(token)) {
-			adminService.updateTokenTimestamp(token);
+		if (!path.contains("/login")) {
+			try {
+				adminService.verifyToken(token);
+			} catch (UnauthorizedException e) {
+				throw new UnauthorizedException(e.getMessage());
+			}
 		}
-		else
-			throw new UnauthorizedException("Unauthorized");
 	}
 }

@@ -3,7 +3,7 @@ package se.plushogskolan.restcaseservice.model;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.QueryParam;
 
-public class UsersRequestBean {
+public final class UsersRequestBean {
 	
 	@QueryParam("firstName")
 	@DefaultValue("")

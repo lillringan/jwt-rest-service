@@ -1,6 +1,6 @@
 package se.plushogskolan.restcaseservice.exception;
 
-public class UnauthorizedException extends RuntimeException {
+public final class UnauthorizedException extends RuntimeException {
 	
 	private static final long serialVersionUID = 3445658517116753172L;
 	
